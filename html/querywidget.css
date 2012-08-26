@@ -1,0 +1,94 @@
+.queryrow
+{
+	padding:25px 20px 25px 20px;
+	background-color:#f5f5f5;
+	border: 1px solid #e3dfdf;
+	position: relative;
+}
+.queryrow.dragging
+{
+	background-color:#EBFDD7;
+}
+.querybuttons
+{
+	padding-top: 20px;
+	float:right;
+}
+.group_start .querybuttons, .group_stop .querybuttons
+{
+	padding-top: 0px;
+}
+.querybuttons a.drag
+{
+	cursor:move;
+}
+div.begin_andor
+{
+	margin-bottom: 5px;
+}
+.group_start div.begin_andor, .group_stop div.begin_andor
+{
+	float: left;
+}
+.query select.column
+{
+	width: 200px;
+}
+.query td.columns, select.column
+{
+	width: 200px;
+}
+.query td.columns
+{
+	padding-right:10px;
+}
+.query td.grouplevel
+{
+	padding-left:3px;
+	padding-right:3px;
+}
+.query td.operators, select.operator
+{
+	width: 200px;
+}
+.query td.operators
+{
+	padding-left:5px;
+}
+.query td.values, input.value
+{
+	width: 130px;
+}
+/*.query td.values
+{
+	padding-left:10px;
+}*/
+.query td.values input
+{
+	margin-top: 10px;
+	width: 99%;
+}
+.query td.preoperators, select.preoperator
+{
+	width: 60px;
+	text-align: center;
+}
+.group_start, .group_stop
+{
+	padding-bottom: 40px;
+	background-color: #ECECEC;
+}
+.grouplevel
+{
+	border-right: 1px solid #E3DFDF;
+	border-bottom: 1px solid #E3DFDF;
+	padding: 3px;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	display: inline-block;
+}
+#tl_moverview table
+{
+	width: auto;
+}

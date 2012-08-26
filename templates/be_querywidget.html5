@@ -1,0 +1,74 @@
+<div class="tl_querywidget" id="ctrl_<?php echo $this->strId; ?>" <?php echo $this->attributes; ?> >
+	<div class="queryhead">
+	
+	</div>
+	<div class="querybody">
+<?php $intLevel=1; for ($row = 0; $row < count($this->varValue); $row++): ?>
+<?php
+	$blnGroupStart = ($this->varValue[$row]['value'] == '|group_start|') ? true : false;
+	$blnGroupStop = ($this->varValue[$row]['value'] == '|group_stop|') ? true : false;
+	$blnGroupRow = ($blnGroupStart || $blnGroupStop) ? true : false;
+	$blnHideAndOr = ($row == 0 || $blnGroupStop || $this->varValue[$row - 1]['value'] == '|group_start|') ? true : false;
+	$intLevel = ($blnGroupStart) ? $intLevel+1 : ($blnGroupStop ? $intLevel-1 : $intLevel);
+?>
+		<div class="queryrow<?php echo ($blnGroupStart) ? ' group_start' : (($blnGroupStop) ? ' group_stop' : ''); echo ' level_' . ($blnGroupStop ? $intLevel+1 : $intLevel); ?>">
+			<div class="grouplevel">
+				<?php echo $this->levelLabel; ?>&nbsp;<span><?php echo ($blnGroupStop ? $intLevel+1 : $intLevel); ?></span>
+			</div>
+			<div class="andor<?php if ($blnHideAndOr): ?> invisible<?php endif; ?>">
+				<select class="andor" name="<?php echo $this->strId.'['.$row.'][andor]'; ?>">
+					<?php foreach( $this->arrAndOrs as $andor ): ?>
+					<option value="<?php echo $andor['value']; ?>"><?php echo $andor['label']; ?></option>
+					<?php endforeach; ?>
+				</select>
+			</div>
+			<div class="querybuttons">
+			<?php foreach ($this->arrButtons as $button): ?>
+				<?php if ($blnGroupRow && in_array($button['key'], $this->arrNonGroupBtns)) continue; // Don't show "new", "copy", or "indent" on group rows ?>
+				<a class="<?php echo $button['class']; ?>" href="<?php echo sprintf($button['href'], $row); ?>" title="<?php echo $button['title']; ?>" onclick="<?php echo sprintf($button['onclick'], $row); ?>"><?php echo $button['img']; ?></a>
+			<?php endforeach; ?>
+				<a class="drag invisible"><img src="system/modules/query_widget/html/moveCursor.png" title="Drag to re-order" /></a>
+			</div>
+			
+			<div class="query">
+				<table class="querytable" cellpadding="5" cellspacing="0" border="0" summary="Query row"<?php echo $blnGroupRow ? ' style="display:none;"' : ''; ?>>
+					<tbody>
+					<tr>
+						<td class="columns">
+							<select class="column tl_chosen" name="<?php echo $this->strId.'['.$row.'][column]'; ?>">
+								<?php foreach( $this->arrColumns as $column ): ?>
+								<option class="<?php echo $column['type']; ?>" value="<?php echo $column['value']; ?>"<?php echo ($this->varValue[$row]['column'] == $column['value']) ? ' selected="selected"' : ''; ?>><?php echo $column['label']; ?></option>
+								<?php endforeach; ?>
+							</select>
+						</td>
+						
+						<td class="preoperators">
+							<select class="preoperator" name="<?php echo $this->strId.'['.$row.'][preoperator]'; ?>">
+								<?php foreach( $this->arrPreoperators as $preoperator ): ?>
+								<option value="<?php echo $preoperator['value']; ?>"<?php echo ($this->varValue[$row]['preoperator'] == $preoperator['value']) ? ' selected="selected"' : ''; ?>><?php echo $preoperator['label']; ?></option>
+								<?php endforeach; ?>
+							</select>
+						</td>
+						
+						<td class="operators">
+							<select class="operator tl_chosen" name="<?php echo $this->strId.'['.$row.'][operator]'; ?>">
+								<?php foreach( $this->arrOperators as $operator ): ?>
+								<option value="<?php echo $operator['value']; ?>"<?php echo ($this->varValue[$row]['operator'] == $operator['value']) ? ' selected="selected"' : ''; ?>><?php echo $operator['label']; ?></option>
+								<?php endforeach; ?>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td class="values" colspan="3">
+							<input type="text" class="value" name="<?php echo $this->strId.'['.$row.'][value]'; ?>" value="<?php echo $this->varValue[$row]['value']; ?>" />
+						</td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+			
+		</div>
+		
+<?php endfor; ?>
+	</div>
+</div>
